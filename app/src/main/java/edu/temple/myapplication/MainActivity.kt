@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -52,10 +51,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.startButton).setOnClickListener {
             timerBinder?.let { binder ->
 
-
                 when {
                     !binder.isRunning && !binder.paused -> {
-                        binder.start(10)
+                        binder.start(100) // start from 100 or resume if value saved
                     }
 
                     binder.isRunning && !binder.paused -> {
@@ -82,9 +80,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.action_start -> {
-                timerBinder?.start(10)
+                timerBinder?.start(100)
             }
-            R.id.action_stop -> {timerBinder?.pause()}
+            R.id.action_stop -> {
+                timerBinder?.pause()
+            }
             else -> return false
         }
 
